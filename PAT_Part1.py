@@ -66,6 +66,7 @@ def main():
             if validate_sales_data(amount, year, month, day):
                 quarter = calculate_quarter(month)
                 sales_data.append([str(amount), str(year), str(month), str(day), str(quarter)])
+                print("\nSales for " + str(year)+"-" + str(month) + "-" + str(day) + " added.")
                 
             else:
                 print("Invalid sales data. Please check your inputs.")
