@@ -26,11 +26,11 @@ def main():
         print("\nCOMMAND MENU:")
         print("view   - View all sales")
         print("add    - Add sales")
-        print("import - Import slaes from file")
+        print("import - Import sales from file")
         print("menu   - Show menu")
         print("exit   - Exit program")
 
-        choice = input("Please enter a command: ")
+        choice = input("\nPlease enter a command: ").lower()
         total = 0
 
         if choice == 'view':
@@ -58,7 +58,7 @@ def main():
                 total += float(entry[0])
                 print(" | ".join(row[i].ljust(max_widths[i]) for i in range(len(row))))
             print(separator)    
-            print("\t  | TOTAL:   " + str(total))
+            print("\t  | TOTAL:   " + str(total) + "\n")
         elif choice == 'add':
             # Add new sales data
             sales_entry = get_sales_data()
