@@ -57,7 +57,8 @@ def main():
                 row = [date, entry[4], str(entry[0])]
                 total += float(entry[0])
                 print(" | ".join(row[i].ljust(max_widths[i]) for i in range(len(row))))
-            print("\t  | Total:   " + str(total))
+            print(separator)    
+            print("\t  | TOTAL:   " + str(total))
         elif choice == 'add':
             # Add new sales data
             sales_entry = get_sales_data()

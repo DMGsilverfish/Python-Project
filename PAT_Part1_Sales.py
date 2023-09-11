@@ -5,8 +5,8 @@ def get_sales_data() -> Tuple[float, int, int, int]:
     try:
         amount = float(input("Enter sales amount: "))
         year = int(input("Enter year: "))
-        month = int(input("Enter month: "))
-        day = int(input("Enter day: "))
+        month = int(input("Enter month(1-12): "))
+        day = int(input("Enter day(1-31): "))
         return amount, year, month, day
     except ValueError:
         print("Invalid input. Please enter valid numeric values.")
