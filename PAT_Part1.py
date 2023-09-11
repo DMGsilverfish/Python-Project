@@ -35,7 +35,7 @@ def main():
 
         if choice == 'view':
              # Define headers and calculate the maximum width for each column
-            headers = ["Date", "Quarter", "Amount"]
+            headers = ["       Date", "Quarter", "Amount"]
             max_widths = [len(header) for header in headers]
 
             # Calculate the maximum width for each column based on data
@@ -52,10 +52,17 @@ def main():
             print(separator)
 
             # Print data
+            num = 0
             for entry in sales_data:
+                num += 1
                 date = f"{entry[1]}-{entry[2]}-{entry[3]}"
-                row = [date, entry[4], str(entry[0])]
+                row = [str(num) + ". ", date, entry[4], str(entry[0])]
                 total += float(entry[0])
+
+                 # Calculate the maximum width for each column based on data in 'row'
+                max_widths = [len(str(num) + ". ")]
+                max_widths.extend(len(item) for item in row[1:])
+
                 print(" | ".join(row[i].ljust(max_widths[i]) for i in range(len(row))))
             print(separator)    
             print("\t  | TOTAL:   " + str(total) + "\n")
