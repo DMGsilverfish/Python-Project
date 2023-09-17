@@ -1,7 +1,8 @@
 #s224082124, Daniel Gibson
-from PAT_Part2_Sales import get_sales_data, calculate_quarter
+from PAT_Part2_Sales import get_sales_data, check_sales_data, calculate_quarter
 from PAT_Part2_File_Operation import read_sales_data, write_sales_data
 import re
+import csv
 
 def is_valid_filename(filename):
     # Define a regular expression pattern to match the desired format
@@ -97,23 +98,45 @@ def main():
                 print("Invalid sales data. Please check your inputs.")
 
         elif choice == 'import':
-                # Import sales data from CSV
+        # Import sales data from CSV
             filename = input("Enter the name of the CSV file to import: ")
+            importDataFile = "PAT_Part2_ImportData.csv"
+            with open(importDataFile, 'w', newline='') as csvFile:
+                pass
 
-            if (filename.endswith(".csv") and filename[-5] in ['w', 'm', 'c', 'e']):
+            if filename.endswith(".csv") and filename[-5] in ['w', 'm', 'c', 'e']:
                 if is_valid_filename(filename):
                     if filename not in imported_files:
                         imported_files.add(filename)
                         imported_data = read_sales_data(filename)
                         print(f"File '{filename}' has been successfully imported.")
+                        print("\nImported data:")
+                        is_valid = True
+                        valid_data = []  # Create a list to store valid data
+
+                        for data_entry in imported_data:
+                            if not check_sales_data(data_entry):
+                                is_valid = False
+                                print("Bad data was found in the file and replaced with a '?'")  # Print "Bad data" for invalid entries
+
+                        
+                        with open(importDataFile, mode='r') as csv_file:
+                            csv_reader = csv.reader(csv_file)
+                            for row in csv_reader:
+                                valid_data.append(row)
+
+                        # Display all valid data
+                        display(valid_data)
+                        if is_valid == False:
+                            print("Select a file with good data please!")  # Print "Bad data" for invalid entries
+
                     else:
                         print("This file has already been imported.")
-                    print("\n")
-                    display(sales_data)
                 else:
                     print("Invalid filename format. Please use sales_qn_yyyy_r.csv format.")
             else:
-                print(f"File name '{filename}' doesn't include one of the following region codes: ['w', 'm', 'c', 'e'].")  
+                print(f"File name '{filename}' doesn't include one of the following region codes: ['w', 'm', 'c', 'e'].")
+  
 
         elif choice == 'menu':
             # Save and quit
