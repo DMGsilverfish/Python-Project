@@ -1,39 +1,43 @@
-from region_Part3 import Region
-from regions_Part3 import Regions
-from file_Part3 import File
-from custom_exceptions_Part3 import FileImportError
-from daily_sales_Part3 import DailySales
-from sales_list_Part3 import SalesList
+from sales_processor import salesDataProcessor, FileImportError
 
 def main():
-    # Create instances of Regions class and add valid regions
-    valid_regions = Regions()
-    valid_regions.add_region(Region('m', 'Mountain'))
-    valid_regions.add_region(Region('c', 'Central'))
-    valid_regions.add_region(Region('e', 'East'))
-    valid_regions.add_region(Region('w', 'West'))
+    sales_processor = salesDataProcessor()
 
-    # Example of creating a File object (replace with your actual data)
-    sample_file = File("sales_q2_2020_m.csv", valid_regions.get_region_by_code('m'))
+    while True:
+        print("SALES DATA IMPORTER")
+        print("")
+        print("COMMAND MENU\n")
+        print("view\t- View all sales")
+        print("add\t- Add sales")
+        print("import\t- Import sales from file")
+        print("menu\t- Show menu")
+        print("exit\t- Exit Program")
 
-    # Example of creating a DailySales object (replace with your actual data)
-    sales_data = DailySales(1000.0, "2020-06-15", valid_regions.get_region_by_code('m'), 2)
+        choice = input("Please enter a command: ")
 
-    # Example of creating a SalesList object
-    sales_list = SalesList()
-
-    # Example of adding sales data to the SalesList
-    sales_list.add_sales(sales_data)
-
-    # Example of adding print statements for debugging
-    
-    try:
-        sales_list.import_sales_data(sample_file.filename)
-        print("Sales data imported successfully.")
-    except FileImportError as e:
-        print(f"Error: {e}")  
-
-    # Continue implementing your program logic here
+        if choice == "view":
+            sales_processor.display_sales_data()
+        elif choice == "add":
+            new_sale = sales_processor.get_sales_data_from_user()
+            sales_processor.sales_list.add_sales_data(new_sale)
+        elif choice == "import":
+            filename = input("Enter the CSV file name to import: ")
+            try:
+                sales_processor.import_sales_data_from_file(filename)
+            except FileImportError as e:
+                print(e)
+        elif choice == "menu":
+            print("COMMAND MENU\n")
+            print("view\t- View all sales")
+            print("add\t- Add sales")
+            print("import\t- Import sales from file")
+            print("menu\t- Show menu")
+            print("exit\t- Exit Program")
+        elif choice == "exit":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
 
 if __name__ == "__main__":
     main()
